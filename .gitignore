@@ -1,0 +1,13 @@
+# Node build artifacts
+node_modules
+npm-debug.log
+
+# Yarn build artifacts
+yarn-error.log
+
+# VSCode configs
+.vscode
+
+# Local development
+*.env
+*.dev

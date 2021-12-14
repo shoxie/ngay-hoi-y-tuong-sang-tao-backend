@@ -1,10 +1,10 @@
 const express = require('express');
 const adminsController = require('./controller');
 const { verificationMiddlewareFactory } = require('../../authentication/jwt.service');
-
+const { loginValidator } = require('./validator');
 const adminsRouter = express.Router();
 
-adminsRouter.post('/login', (req, res, next) => {
+adminsRouter.post('/login', loginValidator, (req, res, next) => {
 	adminsController.authenticateAdmin(req, res, next);
 });
 
@@ -12,9 +12,9 @@ adminsRouter.post('/login', (req, res, next) => {
 const adminJwtVerifier = verificationMiddlewareFactory('ADMIN');
 adminsRouter.use(adminJwtVerifier);
 
-adminsRouter.post('/', (req, res, next) => {
-	adminsController.createAdmin(req, res, next);
-});
+// adminsRouter.post('/', (req, res, next) => {
+// 	adminsController.createAdmin(req, res, next);
+// });
 
 adminsRouter.get('/:email', (req, res, next) => {
 	adminsController.readAdmin(req, res, next);

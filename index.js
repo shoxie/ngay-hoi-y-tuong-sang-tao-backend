@@ -1,7 +1,7 @@
 // Importing environment variables
 require('dotenv').config();
 console.log('environment: ', process.env.MODE);
-
+const { errors } = require('celebrate');
 // Importing modules
 const express = require('express');
 const app = express(); 
@@ -18,6 +18,7 @@ app.use(serveStatic(path.join(__dirname, 'public'))); // Static files serving
 app.use(bodyParser.urlencoded({ extended: false })); // form urlencoded data
 app.use(bodyParser.json()); // json data
 // app.use(bodyParser.text()); // text data
+app.use(errors());
 
 // Routing 
 app.get('/', (req, res, next) => { // home endpoint
@@ -29,6 +30,10 @@ const usersRouter = require('./routes/users/router');
 api.use('/users', usersRouter);
 const adminsRouter = require('./routes/admins/router');
 api.use('/admins', adminsRouter);
+const ideasRouter = require('./routes/ideas/router');
+api.use('/ideas', ideasRouter);
+const categoriesRouter = require('./routes/categories/router');
+api.use('/categories', categoriesRouter);
 
 app.use('/api/v1', api);
 

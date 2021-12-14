@@ -1,0 +1,114 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+enum ideaStatus {
+  pending
+  accepted
+  rejected
+}
+
+model Account {
+  id                 String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  mssv          String?
+  school        School?   @relation(fields: [schoolId], references: [id])
+  schoolId      String?   @db.ObjectId
+  otherSchool   String?
+  phoneNumber   Int?
+  is_active     Boolean   @default(false)
+  Idea          Idea[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model VerificationToken {
+  id         String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model School {
+  id   String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name String
+  User User[]
+}
+
+model Idea {
+  id           String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  title        String
+  content      String
+  status       ideaStatus  @default(pending)
+  student      User        @relation(fields: [studentId], references: [id])
+  studentId    String      @db.ObjectId
+  Category     Category?   @relation(fields: [categoryId], references: [id])
+  categoryId   String?     @db.ObjectId
+  is_favourite Boolean     @default(false)
+  round_1      ideaStatus? @default(pending)
+  round_2      ideaStatus?
+  round_3      ideaStatus?
+}
+
+model Category {
+  id           String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  name         String
+  slug         String
+  vote_1_count Int     @default(0)
+  vote_2_count Int     @default(0)
+  vote_3_count Int     @default(0)
+  vote_4_count Int     @default(0)
+  vote_5_count Int     @default(0)
+  bg_color     String?
+  bg_url       String?
+  description  String?
+  idea         Idea[]
+}
+
+model Admin {
+  id       String @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  username String
+  password String
+}

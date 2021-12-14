@@ -20,7 +20,7 @@ const usersController = {
 
 	async authenticateUser(req, res, next){
 		const userCredentials = {
-			email: req.body.email,
+			username: req.body.username,
 			password: req.body.password,
 		};
 		let jwt = null;

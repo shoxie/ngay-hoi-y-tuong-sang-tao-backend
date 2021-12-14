@@ -8,10 +8,10 @@ const jwtService = {
 		let secret = null;
 		switch(userType){
 			case 'USER':
-				secret = process.env.JWT_USERS_SECRET || 'JWT_USERS_SECRET';
+				secret = process.env.JWT_USERS_SECRET || 'lmao1';
 				break
 			case 'ADMIN':
-				secret = process.env.JWT_ADMINS_SECRET || 'JWT_ADMINS_SECRET';
+				secret = process.env.JWT_ADMINS_SECRET || 'lmao2';
 				break;
 			default:
 				throw new NotFound('User type not found');
@@ -30,16 +30,16 @@ const jwtService = {
 		let secret = null;
 		switch(userType){
 			case 'USER':
-				secret = process.env.JWT_USERS_SECRET || 'JWT_USERS_SECRET';
+				secret = process.env.JWT_USERS_SECRET || 'lmao1';
 				break;
 			case 'ADMIN':
-				secret = process.env.JWT_ADMINS_SECRET || 'JWT_ADMINS_SECRET';
+				secret = process.env.JWT_ADMINS_SECRET || 'lmao2';
 				break;
 			default:
 				throw new NotFound('User type not found');
 		}
 		const verificationMiddleware = function(req, res, next){
-			const jwt = req.headers.authorization.split(' ')[1]; // 'Bearer token', we just need the token part
+			const jwt = req?.headers?.authorization?.split(' ')[1]  ?? ""// 'Bearer token', we just need the token part
 			// console.log(jwt);
 			let userInfo = null;
 			try {

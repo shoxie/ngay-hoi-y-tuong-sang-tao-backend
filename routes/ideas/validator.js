@@ -8,7 +8,7 @@ const updateValidator = celebrate({
 
 const getByCategoryValidator = celebrate({
 	query: Joi.object().keys({
-		id: Joi.required().error(new Error('Category [id] is required'))
+		slug: Joi.required().error(new Error('Category [slug] is required'))
 	})
 })
 

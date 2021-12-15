@@ -28,12 +28,13 @@ const categoriesController = {
 		res.status(200).json(result);
 	},
 	async updateCategory(req, res, next) {
-		const categoryId = req.query.id;
+		const id = parseInt(req.query,id)
 		const newCategoryInfo = req.body;
+
 		let result = null;
 		try {
 			result = await prisma.category.update({
-				where: { id: categoryId },
+				where: { id },
 				data: newCategoryInfo
 			});
 		} catch (e) {
@@ -43,7 +44,7 @@ const categoriesController = {
 		res.status(200).json(result);
 	},
 	async deleteCategory(req, res, next) {
-		const categoryId = req.query.id;
+		const categoryId = parseInt(req.query,id)
 		let result = null;
 		try {
 			result = await prisma.category.delete({

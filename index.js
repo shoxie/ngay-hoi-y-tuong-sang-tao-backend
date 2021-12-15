@@ -14,7 +14,7 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 
 // Setting middleware (order matters)
-app.use(cors()); // Sets response headers securely
+app.use(cors({ origin : "*" })); // Sets response headers securely
 app.use(serveStatic(path.join(__dirname, 'public'))); // Static files serving
 app.use(bodyParser.urlencoded({ extended: false })); // form urlencoded data
 app.use(bodyParser.json()); // json data

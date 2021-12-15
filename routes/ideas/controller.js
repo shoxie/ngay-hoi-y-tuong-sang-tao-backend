@@ -65,7 +65,8 @@ const ideasController = {
 	},
 
 	async updateIdea(req, res, next) {
-		console.log(req.body)
+		const id = parseInt(req.query.id)
+
 		let result = null;
 		try {
 			result = await prisma.idea.update({
@@ -92,10 +93,11 @@ const ideasController = {
 	},
 
 	async deleteIdea(req, res, next) {
+		const id = parseInt(req.params.id)
 		let result = null;
 		try {
 			result = await prisma.idea.delete({
-				where: { id: req.params.id },
+				where: { id },
 			})
 		} catch (e) {
 			next(e);

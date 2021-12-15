@@ -1,9 +1,9 @@
 function globalErrorHandler(error, req, res, next){
-	console.error(error.joi.toString());
+	var errorMsg = error?.joi ? error.joi.toString() : error.message 
 	res.status(500).json({
 		success: false,
 		data: null,
-		error: error?.joi.toString() ?? error.message,
+		error: errorMsg
 	});
 }
 

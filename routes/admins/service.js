@@ -30,8 +30,8 @@ const adminsService = {
 			},
 		});
 		if (!adminInfo) throw new NotFound('Could not find admin');
-		const jwt = jwtService.sign(adminInfo, 'ADMIN');
-		return { jwt };
+		const token = jwtService.sign(adminInfo, 'ADMIN');
+		return { token };
 	},
 
 	async readAdmin(adminEmail) {

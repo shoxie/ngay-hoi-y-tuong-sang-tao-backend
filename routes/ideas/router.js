@@ -32,7 +32,7 @@ ideasRouter.get('/category', getByCategoryValidator, (req, res, next) => {
 	ideasController.readIdeasByCategory(req, res, next);
 })
 
-ideasRouter.put('/:id', updateValidator, (req, res, next) => {
+ideasRouter.put('/', updateValidator, (req, res, next) => {
 	ideasController.updateIdea(req, res, next); 
 });
 

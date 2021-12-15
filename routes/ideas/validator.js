@@ -2,7 +2,7 @@ const { celebrate, Joi } = require('celebrate');
 
 const updateValidator = celebrate({
 	body: Joi.object().keys({
-		id: Joi.disallow().error(new Error('id is not allowed')),
+		id: Joi.forbidden().error(new Error('id is not allowed')),
 	})
 })
 

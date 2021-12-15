@@ -65,11 +65,24 @@ const ideasController = {
 	},
 
 	async updateIdea(req, res, next) {
+		console.log(req.body)
 		let result = null;
 		try {
 			result = await prisma.idea.update({
-				where: { id: req.params.id },
-				data: req.body
+				where: { id: req.query.id },
+				data: req.body,
+				include: {
+					Category: {
+						select : {
+							slug: true
+						}
+					},
+					student: {
+						select: {
+							name: true
+						}
+					}
+				}
 			})
 		} catch (e) {
 			next(e);
@@ -99,12 +112,26 @@ const ideasController = {
 	},
 
 	async readIdeasByCategory(req, res, next) {
-			let result = null;
+		let result = null;
 		try {
 			result = await prisma.idea.findMany({
+				include: {
+					Category: {
+						select: {
+							slug: true
+						}
+					},
+					student: {
+						select: {
+							name: true
+						}
+					}
+				},
 				where: {
-					slug: req.query.slug
-				}
+					Category: {
+						slug: req.query.slug
+					}
+				},
 			})
 		} catch (e) {
 			next(e);

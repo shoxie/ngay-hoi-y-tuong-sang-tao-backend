@@ -9,7 +9,7 @@ const createValidator = celebrate({
 
 const updateValidator = celebrate({
 	body: Joi.object().keys({
-		id: Joi.disallow().error(new Error('id is not allowed')),
+		id: Joi.forbidden().error(new Error('id is not allowed')),
 	})
 })
 // All of these are middleware (a.k.a. functions)

@@ -28,11 +28,11 @@ ideasRouter.get('/', (req, res, next) => {
 	ideasController.readIdeas(req, res, next);
 });
 
-ideasRouter.get('/category', getByCategoryValidator, (req, res, next) => {
+ideasRouter.get('/category', (req, res, next) => {
 	ideasController.readIdeasByCategory(req, res, next);
 })
 
-ideasRouter.put('/', updateValidator, (req, res, next) => {
+ideasRouter.put('/', (req, res, next) => {
 	ideasController.updateIdea(req, res, next); 
 });
 

@@ -70,7 +70,7 @@ const ideasController = {
 		let result = null;
 		try {
 			result = await prisma.idea.update({
-				where: { id: req.query.id },
+				where: { id },
 				data: req.body,
 				include: {
 					Category: {
@@ -115,6 +115,8 @@ const ideasController = {
 
 	async readIdeasByCategory(req, res, next) {
 		let result = null;
+		var filter = req.query.filter ? JSON.parse(req.query.filter) : undefined 
+		console.log(filter)
 		try {
 			result = await prisma.idea.findMany({
 				include: {
@@ -132,7 +134,8 @@ const ideasController = {
 				where: {
 					Category: {
 						slug: req.query.slug
-					}
+					},
+					...filter
 				},
 			})
 		} catch (e) {

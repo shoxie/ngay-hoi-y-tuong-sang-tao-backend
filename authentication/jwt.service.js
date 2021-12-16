@@ -18,7 +18,7 @@ const jwtService = {
 		}
 		const options = {
 			algorithm: 'HS256',
-			expiresIn: '3h',
+			expiresIn: '24h',
 		};
 		const jwt = jsonwebtoken.sign(payload, secret, options);
 		return jwt;

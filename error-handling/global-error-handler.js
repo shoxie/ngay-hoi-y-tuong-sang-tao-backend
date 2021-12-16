@@ -1,7 +1,7 @@
 function globalErrorHandler(error, req, res, next){
-	console.log('error name', error.name)
+	var tokenErrors = ["TokenExpiredError", "JsonWebTokenError"]
 	var errorMsg = error?.joi ? error.joi.toString() : error.message 
-	var statusCode = error.name === "JsonWebTokenError" ? 401 : 500
+	var statusCode = tokenErrors.includes(error.name) ? 401 : 500
 	res.status(statusCode).json({
 		success: false,
 		data: null,

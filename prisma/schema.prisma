@@ -55,6 +55,7 @@ model User {
   schoolId      Int?
   otherSchool   String?
   phoneNumber   Int?
+  sanDauYTuong  Boolean   @default(false)
   is_active     Boolean   @default(false)
   Idea          Idea[]
   createdAt     DateTime  @default(now())

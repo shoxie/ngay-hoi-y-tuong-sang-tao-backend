@@ -50,7 +50,8 @@ const ideasController = {
 				where: { id: ids ? { in: ids } : undefined, ...filter },
 				orderBy: order ? { [order]: sort } : undefined,
 				include: {
-					Category: true
+					Category: true,
+					student: true
 				}
 			});
 			total = await prisma.idea.count({
@@ -115,10 +116,10 @@ const ideasController = {
 
 	async readIdeasByCategory(req, res, next) {
 		let result = null;
+		var total = null
 		var filter = req.query.filter ? JSON.parse(req.query.filter) : undefined 
 		const skip = parseInt(req.query._skip) || undefined;
 		const take = parseInt(req.query._take) || undefined;
-		
 		try {
 			result = await prisma.idea.findMany({
 				skip,
@@ -142,11 +143,22 @@ const ideasController = {
 					...filter
 				},
 			})
+			total = await prisma.idea.count({
+				where: {
+					Category: {
+						slug: req.query.slug
+					},
+					...filter
+				},
+			})
 		} catch (e) {
 			next(e);
 			return null;
 		}
-		res.status(200).json(result);
+		res.status(200).json({
+			result,
+			total
+		});
 	}
 	
 	// async updateState(req, res, next) {

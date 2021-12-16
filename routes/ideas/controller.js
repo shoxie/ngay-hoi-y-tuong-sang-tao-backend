@@ -116,9 +116,13 @@ const ideasController = {
 	async readIdeasByCategory(req, res, next) {
 		let result = null;
 		var filter = req.query.filter ? JSON.parse(req.query.filter) : undefined 
-		console.log(filter)
+		const skip = parseInt(req.query._skip) || undefined;
+		const take = parseInt(req.query._take) || undefined;
+		
 		try {
 			result = await prisma.idea.findMany({
+				skip,
+				take,
 				include: {
 					Category: {
 						select: {

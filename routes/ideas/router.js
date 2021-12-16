@@ -28,6 +28,10 @@ ideasRouter.get('/', (req, res, next) => {
 	ideasController.readIdeas(req, res, next);
 });
 
+ideasRouter.get('/count', (req, res, next) => {
+	ideasController.countByStatus(req, res, next)
+})
+
 ideasRouter.get('/category', (req, res, next) => {
 	ideasController.readIdeasByCategory(req, res, next);
 })

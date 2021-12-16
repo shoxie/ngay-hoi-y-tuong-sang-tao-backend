@@ -159,6 +159,45 @@ const ideasController = {
 			result,
 			total
 		});
+	},
+
+	async countByStatus(req, res, next) {
+		var { round } = req.query
+		var obj = {}
+		var result = null
+		try {
+		result = await prisma.idea.findMany({
+				where : {
+					Category: {
+						slug: req.query.slug
+					}
+				}
+			})
+		switch(round) {
+			case '1' : 
+				obj.rejected = result.filter(item => item.round_1 === "rejected").length
+				obj.accepted = result.filter(item => item.round_1 === "accepted").length
+				obj.pending = result.filter(item => item.round_1 === "pending").length
+				break;
+			case '2' : 
+				obj.rejected = result.filter(item => item.round_2 === "rejected").length
+				obj.accepted = result.filter(item => item.round_2 === "accepted").length
+				obj.pending = result.filter(item => item.round_2 === "pending").length
+				break;
+			case '3' : 
+				obj.rejected = result.filter(item => item.round_3 === "rejected").length
+				obj.accepted = result.filter(item => item.round_3 === "accepted").length
+				obj.pending = result.filter(item => item.round_3 === "pending").length
+				break;
+			default :
+				break
+
+		}
+		}catch(e) {
+			next(e);
+			return null
+		}
+		res.status(200).json(obj)
 	}
 	
 	// async updateState(req, res, next) {

@@ -51,9 +51,22 @@ const ideasController = {
 				orderBy: order ? { [order]: sort } : undefined,
 				include: {
 					Category: true,
-					student: true
+					student: {
+						include: {
+							school: true
+						}
+					}
 				}
 			});
+			data.map(idea => {
+				var newIdea = {...idea}
+				if(idea.student.schoolId === null) {
+					newIdea.student.school = {
+						name: newIdea.student.otherSchool
+					}
+				}
+				return newIdea
+			})
 			total = await prisma.idea.count({
 				where: { id: ids ? { in: ids } : undefined, ...filter },
 			});

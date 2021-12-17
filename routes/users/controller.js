@@ -20,7 +20,7 @@ const usersController = {
 				}
 				students.push({
 					...newStudent,
-					isCompleted : student.Idea.filter((item) => item.idea?.[0]?.round_1 === "accepted").length === 5 ? true : false
+					isCompleted : student.Idea.filter((item) => item.round_1 === "accepted").length >= 5 ? true : false
 				})
 			})
 		} catch (e) {

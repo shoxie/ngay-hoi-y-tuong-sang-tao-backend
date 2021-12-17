@@ -14,8 +14,12 @@ const usersController = {
 				}
 			});
 			result.map(student => {
+				var newStudent = {...student}
+				if (newStudent.schoolId === null) newStudent.school = {
+					name: newStudent.otherSchool
+				}
 				students.push({
-					...student,
+					...newStudent,
 					isCompleted : student.Idea.filter((item) => item.idea?.[0]?.round_1 === "accepted").length === 5 ? true : false
 				})
 			})
